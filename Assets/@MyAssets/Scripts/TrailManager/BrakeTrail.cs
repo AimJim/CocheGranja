@@ -13,7 +13,8 @@ public class BrakeTrail : MonoBehaviour
     {
         GameObject coso = Instantiate(trailMesh);
         coso.transform.position = gameObject.transform.position;
-        if(prev!=null) coso.transform.LookAt(prev.transform);
+        coso.transform.rotation = gameObject.transform.rotation;
+        //if(prev!=null) coso.transform.LookAt(prev.transform);
 
         prev = coso;
     }
