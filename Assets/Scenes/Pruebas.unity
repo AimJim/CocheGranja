@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649133586}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8cdc9a360f851b45aa2b130f4a6ca20, type: 3}
   m_Name: 
@@ -1232,7 +1232,8 @@ MonoBehaviour:
   horizontalOffset: 0.25
   verticalOffset: 0.1
   bMaterial: {fileID: 2100000, guid: 9843d283d446484488b9c331af7ea2a7, type: 2}
-  MAXPOSICIONES: 60
+  MAXPOSICIONES: 20
+  maxAlpha: 0.5
 --- !u!23 &1649133589
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1357,7 +1358,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798786628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8cdc9a360f851b45aa2b130f4a6ca20, type: 3}
   m_Name: 
@@ -1366,7 +1367,8 @@ MonoBehaviour:
   horizontalOffset: 0.25
   verticalOffset: 0.1
   bMaterial: {fileID: 2100000, guid: 9843d283d446484488b9c331af7ea2a7, type: 2}
-  MAXPOSICIONES: 60
+  MAXPOSICIONES: 20
+  maxAlpha: 0.5
 --- !u!23 &1798786631
 MeshRenderer:
   m_ObjectHideFlags: 0

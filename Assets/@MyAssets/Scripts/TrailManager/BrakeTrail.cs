@@ -19,6 +19,8 @@ public class BrakeTrail : MonoBehaviour
     
     [SerializeField]
     int MAXPOSICIONES = 20;
+    [SerializeField]
+    float maxAlpha;
 
     Mesh brakeMesh;
     
@@ -30,9 +32,48 @@ public class BrakeTrail : MonoBehaviour
         GetComponent<MeshRenderer>().material = bMaterial;
     }
 
+    bool stopAnim = false;
     private void OnDisable()
     {
+        stopAnim = false;
+        
+        StartCoroutine(difuseBrake());
+    }
+
+    IEnumerator difuseBrake()
+    {
+        if (!stopAnim)
+        {
+            
+            Color color = bMaterial.color;
+            if(color.a > 0)
+            {
+                //Debug.Log(color.a);
+                color.a -= 0.05f;
+                bMaterial.color = color;
+            }
+            yield return (new WaitForSeconds(0.1f));
+            StartCoroutine(difuseBrake());
+            
+        }
+        
+    
+        stopAnim = false;
+    }
+
+    private void OnEnable()
+    {
         brakeMesh.Clear();
+        for (int i = 0; i< posiciones.Count; i++)
+        {
+            posiciones.RemoveAt(i);
+        }
+        Color color = bMaterial.color;
+        color.a = maxAlpha;
+        bMaterial.color = color;
+        stopAnim = true;
+        Debug.Log(color.a);
+       
     }
     private void Update()
     {
