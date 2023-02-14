@@ -178,12 +178,6 @@ public class BrakeTrail : MonoBehaviour
         }
         brakeMesh.triangles = intList.ToArray(); // Horizontales, arreglarlas y añadir verticales (Techo y suelo)
         
-        /*
-        GameObject coso = Instantiate(trailMesh);
-        coso.transform.position = gameObject.transform.position;
-        coso.transform.rotation = gameObject.transform.rotation;
-        //if(prev!=null) coso.transform.LookAt(prev.transform);
-
-        prev = coso;*/
+        
     }
 }
