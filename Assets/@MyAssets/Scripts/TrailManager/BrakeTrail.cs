@@ -131,18 +131,18 @@ public class BrakeTrail : MonoBehaviour
                 intList.Add(3 + 4 * i);
                 intList.Add(2 + 4 * i);
             }
-            else if (i == posiciones.Count - 2)
+            else if (i == posiciones.Count - 1)
             {// No se dibuja
-                intList.Add(1 + (4 * (i + 1)));
-                intList.Add(2 + (4 * (i + 1)));
-                intList.Add(0 + (4 * (i + 1)));
+                intList.Add(3 + (4 * i));
+                intList.Add(1 + (4 * i));
+                intList.Add(0 + (4 * i));
 
-                intList.Add(3 + (4 * (i + 1)));
-                intList.Add(2 + (4 * (i + 1)));
-                intList.Add(1 + (4 * (i + 1)));
+                intList.Add(2 + (4 * i));
+                intList.Add(3 + (4 * i));
+                intList.Add(0 + (4 * i));
             }
 
-            if (i < posiciones.Count - 2)
+            if (i < posiciones.Count - 1)
             {
                 //Cara izquierda
                 intList.Add(1 + (4 * (i + 1)));
