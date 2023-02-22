@@ -106,14 +106,7 @@ public class BrakeTrail : MonoBehaviour
             vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z)));
         }
 
-       /* while (vertices.Count < MAXPOSICIONES * 4)
-        {
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(posiciones[posiciones.Count - 1].x - horizontalOffset, posiciones[posiciones.Count - 1].y - verticalOffset, posiciones[posiciones.Count - 1].z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(posiciones[posiciones.Count - 1].x + horizontalOffset, posiciones[posiciones.Count - 1].y - verticalOffset, posiciones[posiciones.Count - 1].z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(posiciones[posiciones.Count - 1].x - horizontalOffset, posiciones[posiciones.Count - 1].y + verticalOffset, posiciones[posiciones.Count - 1].z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(posiciones[posiciones.Count - 1].x + horizontalOffset, posiciones[posiciones.Count - 1].y + verticalOffset, posiciones[posiciones.Count - 1].z)));
-        }*/
-
+       
         brakeMesh.vertices = vertices.ToArray();
         List<int> intList = new List<int>();
         //Primera cara

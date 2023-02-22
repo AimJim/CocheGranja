@@ -28,18 +28,7 @@ public class CarMovement : MonoBehaviour
 
 
     //TODO cambiar a input en condiciones, de momento esto
-    bool forward;
-    bool backward;
-    bool left;
-    bool right;
-    private void Update()
-    {
-        
-        forward = Input.GetKey(KeyCode.W);
-        backward = Input.GetKey(KeyCode.S);
-        left = Input.GetKey(KeyCode.A);
-        right = Input.GetKey(KeyCode.D);
-    }
+    
 
     Vector3 prevPos = Vector3.zero;
     Vector3 posPos = Vector3.zero;
@@ -56,38 +45,29 @@ public class CarMovement : MonoBehaviour
         {
             rb.drag = maxDrag * (angle % 90) / 10;
 
-            if (forward)
-            {
+            
 
-                rb.AddForce(gameObject.transform.forward * accelForce);
-            }
-            if (backward)
-            {
+            rb.AddForce(gameObject.transform.forward * accelForce * CarControl.getInstance().getAccelInput());
+            
+            
                 //TODO el control de las luces moverlas a otro sitio por que no le afectan las colisiones
-                if (rb.velocity.magnitude > 1f && angle < 90)
-                {
+            if (rb.velocity.magnitude > 1f && angle < 90 && CarControl.getInstance().getBrakeInput() < -0.1f)
+            {
 
-                    clc.brake(true);
-                }
-                else
-                {
-                    clc.brake(false);
-                }
-
-                rb.AddForce(gameObject.transform.forward * -accelForce);
-
-            }else
+                clc.brake(true);
+            }
+            else
             {
                 clc.brake(false);
             }
-            if (left)
-            {
-                rb.MoveRotation(gameObject.transform.rotation * Quaternion.Euler(0, -turnSpeed * Time.fixedDeltaTime, 0));
-            }
-            if (right)
-            {
-                rb.MoveRotation(gameObject.transform.rotation * Quaternion.Euler(0, turnSpeed * Time.fixedDeltaTime, 0));
-            }
+
+            rb.AddForce(gameObject.transform.forward * accelForce * CarControl.getInstance().getBrakeInput());
+
+            
+            
+            rb.MoveRotation(gameObject.transform.rotation * Quaternion.Euler(0, turnSpeed * Time.fixedDeltaTime * CarControl.getInstance().getSteerInput(), 0));
+        
+            
         } else
         {
             rb.drag = 0;
@@ -114,9 +94,5 @@ public class CarMovement : MonoBehaviour
         collisions--;
     }
 
-    //TODO cambiar cuando ponga los inputs
-    public bool getBraking()
-    {
-        return backward;
-    }
+   
 }
