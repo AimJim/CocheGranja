@@ -88,6 +88,7 @@ public class BrakeTrail : MonoBehaviour
 
         posiciones.Add(gameObject.transform.position);
         RenderTrail();
+        Debug.Log(gameObject.transform.rotation.eulerAngles);
         
         
         
@@ -100,10 +101,10 @@ public class BrakeTrail : MonoBehaviour
         foreach (Vector3 p in posiciones)
         {
             //TODO añadir la rotacion (calcularla con sencos)
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y - verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y - verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y + verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z)));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y - verticalOffset, p.z )));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y - verticalOffset, p.z )));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y + verticalOffset, p.z )));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z )));
         }
 
        

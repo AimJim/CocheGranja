@@ -59,7 +59,7 @@ public class CarControl : MonoBehaviour
         startInput = startAction.triggered;
         lightInput = lightAction.triggered;
         hornInput = hornAction.triggered;
-        Debug.Log(lightInput);
+        
 
     }
 
