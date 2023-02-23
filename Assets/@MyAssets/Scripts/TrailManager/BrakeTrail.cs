@@ -6,6 +6,14 @@ public class BrakeTrail : MonoBehaviour
 {
     [SerializeField]
     Transform parentTransform;
+    [SerializeField]
+    Transform e1;
+    [SerializeField]
+    Transform e2;
+    [SerializeField]
+    Transform e3;
+    [SerializeField]
+    Transform e4;
     
     
     [SerializeField]
@@ -15,9 +23,13 @@ public class BrakeTrail : MonoBehaviour
     [SerializeField]
     Material bMaterial;
 
-    List<Vector3> posiciones =  new List<Vector3>();
-    List<Vector3> rotaciones = new List<Vector3>();
-    
+  
+
+    List<Vector3> posE1 = new List<Vector3>();
+    List<Vector3> posE2 = new List<Vector3>();
+    List<Vector3> posE3 = new List<Vector3>();
+    List<Vector3> posE4 = new List<Vector3>();
+
     [SerializeField]
     int MAXPOSICIONES = 20;
     [SerializeField]
@@ -66,10 +78,13 @@ public class BrakeTrail : MonoBehaviour
     private void OnEnable()
     {
         brakeMesh.Clear();
-        for (int i = 0; i< posiciones.Count; i++)
+        for (int i = 0; i< posE1.Count; i++)
         {
-            posiciones.RemoveAt(i);
-            rotaciones.RemoveAt(i);
+            
+            posE1.RemoveAt(i);
+            posE2.RemoveAt(i);
+            posE3.RemoveAt(i);
+            posE4.RemoveAt(i);
         }
         Color color = bMaterial.color;
         color.a = maxAlpha;
@@ -82,17 +97,24 @@ public class BrakeTrail : MonoBehaviour
     private void FixedUpdate()
     {
                 
-        if (posiciones.Count >= MAXPOSICIONES)
+        if (posE1.Count >= MAXPOSICIONES)
         {
-            posiciones.RemoveAt(0);
-            rotaciones.RemoveAt(0);
+            
+            posE1.RemoveAt(0);
+            posE2.RemoveAt(0);
+            posE3.RemoveAt(0);
+            posE4.RemoveAt(0);
+
         }
         
 
-        posiciones.Add(gameObject.transform.position);
-        rotaciones.Add(transform.rotation.eulerAngles);
+        posE1.Add(e1.position);
+        posE2.Add(e2.position);
+        posE3.Add(e3.position);
+        posE4.Add(e4.position);
+
         RenderTrail();
-        Debug.Log(gameObject.transform.rotation.eulerAngles);
+        
         
         
         
@@ -102,15 +124,18 @@ public class BrakeTrail : MonoBehaviour
     {
 
         List<Vector3> vertices = new List<Vector3>();
-        int counter = 0;
-        foreach (Vector3 p in posiciones)
+        
+        for (int i = 0; i< posE1.Count; i++)
         {
             //TODO añadir la rotacion (calcularla con sencos)
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y - verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y - verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z)));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y + verticalOffset, p.z)));
-            counter++;
+
+            vertices.Add(gameObject.transform.InverseTransformPoint(posE1[i]));
+            vertices.Add(gameObject.transform.InverseTransformPoint(posE2[i]));
+            vertices.Add(gameObject.transform.InverseTransformPoint(posE3[i]));
+            vertices.Add(gameObject.transform.InverseTransformPoint(posE4[i]));
+
+            
+
         }
 
        
@@ -119,7 +144,7 @@ public class BrakeTrail : MonoBehaviour
         
 
         //Renderizar caras (Bien)
-        for (int i = 0; i < posiciones.Count; i++)
+        for (int i = 0; i < posE1.Count; i++)
         {
 
             //Primera y ultimta (tapas)
@@ -133,7 +158,7 @@ public class BrakeTrail : MonoBehaviour
                 intList.Add(3 + 4 * i);
                 intList.Add(2 + 4 * i);
             }
-            else if (i == posiciones.Count - 1)
+            else if (i == posE1.Count - 1)
             {// No se dibuja
                 intList.Add(3 + (4 * i));
                 intList.Add(1 + (4 * i));
@@ -144,7 +169,7 @@ public class BrakeTrail : MonoBehaviour
                 intList.Add(0 + (4 * i));
             }
 
-            if (i < posiciones.Count - 1)
+            if (i < posE1.Count - 1)
             {
                 //Cara izquierda
                 intList.Add(1 + (4 * (i + 1)));
