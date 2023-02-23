@@ -16,6 +16,7 @@ public class BrakeTrail : MonoBehaviour
     Material bMaterial;
 
     List<Vector3> posiciones =  new List<Vector3>();
+    List<Vector3> rotaciones = new List<Vector3>();
     
     [SerializeField]
     int MAXPOSICIONES = 20;
@@ -68,6 +69,7 @@ public class BrakeTrail : MonoBehaviour
         for (int i = 0; i< posiciones.Count; i++)
         {
             posiciones.RemoveAt(i);
+            rotaciones.RemoveAt(i);
         }
         Color color = bMaterial.color;
         color.a = maxAlpha;
@@ -83,10 +85,12 @@ public class BrakeTrail : MonoBehaviour
         if (posiciones.Count >= MAXPOSICIONES)
         {
             posiciones.RemoveAt(0);
+            rotaciones.RemoveAt(0);
         }
         
 
         posiciones.Add(gameObject.transform.position);
+        rotaciones.Add(transform.rotation.eulerAngles);
         RenderTrail();
         Debug.Log(gameObject.transform.rotation.eulerAngles);
         
@@ -98,20 +102,23 @@ public class BrakeTrail : MonoBehaviour
     {
 
         List<Vector3> vertices = new List<Vector3>();
+        int counter = 0;
         foreach (Vector3 p in posiciones)
         {
             //TODO añadir la rotacion (calcularla con sencos)
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y - verticalOffset, p.z )));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y - verticalOffset, p.z )));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y + verticalOffset, p.z )));
-            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z )));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y - verticalOffset, p.z)));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y - verticalOffset, p.z)));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x + horizontalOffset, p.y + verticalOffset, p.z)));
+            vertices.Add(gameObject.transform.InverseTransformPoint(new Vector3(p.x - horizontalOffset, p.y + verticalOffset, p.z)));
+            counter++;
         }
 
        
         brakeMesh.vertices = vertices.ToArray();
         List<int> intList = new List<int>();
-        //Primera cara
+        
 
+        //Renderizar caras (Bien)
         for (int i = 0; i < posiciones.Count; i++)
         {
 
