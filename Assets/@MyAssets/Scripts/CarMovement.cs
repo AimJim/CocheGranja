@@ -7,6 +7,7 @@ public class CarMovement : MonoBehaviour
     Rigidbody rb;
     CarLightControl clc;
     
+    
 
     [SerializeField]
     float accelForce;
@@ -17,12 +18,17 @@ public class CarMovement : MonoBehaviour
     [SerializeField]
     float maxDrag;
 
+    [SerializeField]
+    float driftForwardMovePercentage;
+
     int collisions;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         clc = GetComponent<CarLightControl>();
+        
+        driftForwardMovePercentage = driftForwardMovePercentage / 100;
         
     }
 
@@ -50,16 +56,15 @@ public class CarMovement : MonoBehaviour
             rb.AddForce(gameObject.transform.forward * accelForce * CarControl.getInstance().getAccelInput());
             
             
-                //TODO el control de las luces moverlas a otro sitio por que no le afectan las colisiones
-            if (rb.velocity.magnitude > 1f && angle < 90 && CarControl.getInstance().getBrakeInput() < -0.1f)
+             if(rb.velocity.magnitude > 10f && angle < 90 && CarControl.getInstance().getAccelInput() < 0.1f && CarControl.getInstance().getBrakeInput() > -0.1f)
             {
-
-                clc.brake(true);
-            }
-            else
+                //Forward
+                rb.AddForce(gameObject.transform.forward * accelForce * driftForwardMovePercentage);
+            } else if (rb.velocity.magnitude > 10f && angle > 90 && CarControl.getInstance().getAccelInput() < 0.1f && CarControl.getInstance().getBrakeInput() > -0.1f)
             {
-                clc.brake(false);
-            }
+                //Backwards
+                rb.AddForce(- gameObject.transform.forward * accelForce * driftForwardMovePercentage);
+            }              
 
             rb.AddForce(gameObject.transform.forward * accelForce * CarControl.getInstance().getBrakeInput());
 
@@ -72,7 +77,17 @@ public class CarMovement : MonoBehaviour
         {
             rb.drag = 0;
         }
-        
+        //Control de luces de freno
+        if (rb.velocity.magnitude > 1f && angle < 90 && CarControl.getInstance().getBrakeInput() < -0.1f)
+        {
+
+            clc.brake(true);
+        }
+        else
+        {
+            clc.brake(false);
+        }
+
 
 
 
